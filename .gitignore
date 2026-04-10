@@ -6,3 +6,10 @@
 
 # Ignorer les fichiers compilés Python
 __pycache__/
+
+# Ignorer l’environnement virtuel 
+mon_env/
+
+# Ignorer l’environnement virtuel
+.vscode/
+
