@@ -1,6 +1,3 @@
-# Ignorer les modèles sauvegardés
-*.pkl
-
 # Ignorer les fichiers CSV volumineux (optionnel)
 *.csv
 
