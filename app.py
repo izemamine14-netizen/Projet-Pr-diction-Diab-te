@@ -1,48 +1,60 @@
 import streamlit as st
 import numpy as np
-import pandas as pd
-import tensorflow as tf
+import joblib
+from tensorflow.keras.models import load_model
 
 # =========================
-# 🔥 CHARGEMENT DU MODÈLE
+# LOAD
 # =========================
-model = tf.keras.models.load_model("model.keras")  # ou model_reduced.keras
+model = load_model("model.keras")
+scaler = joblib.load("scaler.pkl")
+top_features = joblib.load("features.pkl")
 
 # =========================
-# 🎯 TITRE INTERFACE
+# UI
 # =========================
-st.title("🩺 Prédiction du Diabète")
-st.write("Entrez les informations du patient pour prédire s'il est diabétique ou non.")
+st.title("🧠 Prédiction du diabète")
 
-# =========================
-# 📊 INPUTS UTILISATEUR
-# =========================
+inputs = []
 
-pregnancies = st.number_input("Grossesses", 0, 20, 1)
-glucose = st.number_input("Glucose", 0, 300, 120)
-blood_pressure = st.number_input("Pression artérielle", 0, 200, 70)
-skin_thickness = st.number_input("Épaisseur de la peau", 0, 100, 20)
-insulin = st.number_input("Insuline", 0, 900, 80)
-bmi = st.number_input("IMC (BMI)", 0.0, 70.0, 25.0)
-dpf = st.number_input("Diabetes Pedigree Function", 0.0, 3.0, 0.5)
-age = st.number_input("Âge", 0, 120, 30)
+# intervalles réalistes
+ranges = {
+    "BMI": (10, 60),
+    "Age": (18, 100),
+    "PhysHlth": (0, 30),
+    "MentHlth": (0, 30),
+    "GenHlth": (1, 5),
+    "HighBP": (0, 1),
+    "HighChol": (0, 1),
+    "Smoker": (0, 1),
+    "PhysActivity": (0, 1),
+    "Fruits": (0, 1),
+    "Veggies": (0, 1)
+}
 
-# =========================
-# 🔥 PRÉDICTION
-# =========================
-if st.button("Prédire"):
-
-    # créer vecteur input
-    input_data = np.array([[pregnancies, glucose, blood_pressure,
-                            skin_thickness, insulin, bmi, dpf, age]])
-
-    # prédiction
-    prediction = model.predict(input_data)
-
-    # résultat
-    if prediction[0][0] > 0.5:
-        st.error("⚠️ Le patient est susceptible d'être diabétique")
+for f in top_features:
+    if f in ranges:
+        min_val, max_val = ranges[f]
+        val = st.slider(f, min_val, max_val, int((min_val + max_val)/2))
     else:
-        st.success("✅ Le patient n'est probablement pas diabétique")
+        val = st.number_input(f, 0.0, 1.0, 0.0)
 
-    st.write("Score :", float(prediction[0][0]))
+    inputs.append(val)
+
+# =========================
+# PREDICTION
+# =========================
+if st.button("🔍 Prédire"):
+
+    x = np.array(inputs).reshape(1, -1)
+    x = scaler.transform(x)
+
+    prob = model.predict(x)[0][0]
+
+    st.write(f"📊 Probabilité : {prob:.4f}")
+
+    # 🔥 seuil corrigé
+    if prob > 0.25:
+        st.error("⚠️ Risque de diabète")
+    else:
+        st.success("✅ Pas de diabète")
