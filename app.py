@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 # =========================
 model = load_model("model.keras")
 scaler = joblib.load("scaler.pkl")
-top_features = joblib.load("features.pkl")
+features = joblib.load("features.pkl")
 
 # =========================
 # UI
@@ -32,7 +32,7 @@ ranges = {
     "Veggies": (0, 1)
 }
 
-for f in top_features:
+for f in features:
     if f in ranges:
         min_val, max_val = ranges[f]
         val = st.slider(f, min_val, max_val, int((min_val + max_val)/2))
@@ -53,8 +53,7 @@ if st.button("🔍 Prédire"):
 
     st.write(f"📊 Probabilité : {prob:.4f}")
 
-    # 🔥 seuil corrigé
-    if prob > 0.25:
+    if prob > 0.35:
         st.error("⚠️ Risque de diabète")
     else:
         st.success("✅ Pas de diabète")

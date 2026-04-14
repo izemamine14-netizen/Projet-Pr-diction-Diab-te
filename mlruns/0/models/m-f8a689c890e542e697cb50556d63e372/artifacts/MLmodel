@@ -1,0 +1,27 @@
+artifact_path: file:c:/Users/nwyar/Desktop/PROJET DEEPLEARNING/Projet-Pr-diction-Diab-te/mlruns/0/models/m-f8a689c890e542e697cb50556d63e372/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.13.2
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.12.6
+is_signature_from_type_hint: false
+mlflow_version: 3.11.1
+model_id: m-f8a689c890e542e697cb50556d63e372
+model_size_bytes: 100740
+model_uuid: m-f8a689c890e542e697cb50556d63e372
+prompts: null
+run_id: a3d15876b681448e929b15e7d7140de5
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1, 21]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-04-14 12:38:20.197847'
