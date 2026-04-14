@@ -51,7 +51,7 @@ if st.button("🔍 Prédire"):
 
     prob = model.predict(x)[0][0]
 
-    st.write(f"📊 Probabilité : {prob:.4f}")
+    st.write(f"📊 Probabilité : {prob * 100:.2f}%")
 
     if prob > 0.35:
         st.error("⚠️ Risque de diabète")
