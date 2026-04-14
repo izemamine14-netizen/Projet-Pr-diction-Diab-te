@@ -1,0 +1,27 @@
+artifact_path: file:c:/Users/boivi/Downloads/Projet-Pr-diction-Diab-te/mlruns/0/models/m-b57b1a2bd7244e9cbd5fe587382d6904/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.13.2
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.13.0
+is_signature_from_type_hint: false
+mlflow_version: 3.11.1
+model_id: m-b57b1a2bd7244e9cbd5fe587382d6904
+model_size_bytes: 100734
+model_uuid: m-b57b1a2bd7244e9cbd5fe587382d6904
+prompts: null
+run_id: 531eb52145f54810b3e39d3623a15d62
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1, 21]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-04-14 12:07:19.247518'
